@@ -85,7 +85,7 @@ pub fn cargo_build_wasm(
     let mut cmd = Command::new("cargo");
     cmd.env(
         "RUSTFLAGS",
-        format!("--cfg=wasmpack_target=\"{}\"", curr_target),
+        format!("--cfg=getrandom_backend=\"wasm_js\" --cfg=wasmpack_target=\"{}\"", curr_target),
     );
     cmd.current_dir(path).arg("build").arg("--lib");
 
