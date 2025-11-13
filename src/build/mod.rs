@@ -85,7 +85,8 @@ pub fn cargo_build_wasm(
     let mut cmd = Command::new("cargo");
     for (key, value) in std::env::vars() {
         if key.starts_with("NG_ENV") {
-            println!("{}: {}", key, value);
+            let msg = format!("{}Adding var env {}={}", emoji::CYCLONE, key, value);
+            PBAR.info(&msg);
             cmd.env(key, value);
         }
     }
