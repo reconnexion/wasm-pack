@@ -83,9 +83,18 @@ pub fn cargo_build_wasm(
     PBAR.info(&msg);
 
     let mut cmd = Command::new("cargo");
+    for (key, value) in std::env::vars() {
+        if key.starts_with("NG_ENV") {
+            println!("{}: {}", key, value);
+            cmd.env(key, value);
+        }
+    }
     cmd.env(
         "RUSTFLAGS",
-        format!("--cfg=getrandom_backend=\"wasm_js\" --cfg=wasmpack_target=\"{}\"", curr_target),
+        format!(
+            "--cfg=getrandom_backend=\"wasm_js\" --cfg=wasmpack_target=\"{}\"",
+            curr_target
+        ),
     );
     cmd.current_dir(path).arg("build").arg("--lib");
 
